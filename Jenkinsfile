@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('git scm update') {
       steps {
-        git url: 'https://github.com/tong76/popup', branch: 'master'
+        git url: 'https://github.com/pjs818/popup', branch: 'master'
       }
     }
     stage('docker build and push') {
