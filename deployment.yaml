@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-popup
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-popup
+  template:
+    metadata:
+      labels:
+        app: spring-boot-popup
+    spec:
+      containers:
+        - name: spring-boot-popup
+          image: 192.168.1.10:8443/popup
+          ports:
+            - containerPort: 8080
+          env:
+           - name: SPRING_DATASOURCE_URL
+             value: jdbc:oracle:thin:@192.168.1.101:31521:xe # oracle-xe-11g 서비스의 EXTERNAL-IP로 수정
+           - name: SPRING_DATASOURCE_USERNAME
+             value: POP
+           - name: SPRING_DATASOURCE_PASSWORD
+             value: POP

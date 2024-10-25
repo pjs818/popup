@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.zeronelab.mybatis.dao.BoardMapper">
+
+    <!-- 팝업리스트 조회 -->
+    <select id="listBoard"
+            resultType="dev.zeronelab.mybatis.vo.BoardEntity">
+        select * from fboard order by bno desc
+    </select>
+
+    <select id="boardPage"
+            resultType="dev.zeronelab.mybatis.vo.BoardEntity">
+        select * from fboard where bno = #{bno}
+    </select>
+
+    <insert id="boardRegist">
+        insert into fboard (bno, mno, btitle, bcon, bwriter, bdate)
+        values(bno_seq.nextval, #{mno}, #{btitle}, #{bcon}, #{bwriter}, sysdate)
+    </insert>
+
+    <update id="boardCnt">
+        update fboard set bcnt = bcnt+1 where bno = #{bno}
+    </update>
+
+    <update id="boardBccnt">
+        update fboard set bccnt = bccnt + 1 where bno = #{bno}
+    </update>
+
+    <update id="boardBccntm">
+        update fboard set bccnt = bccnt - 1 where bno = #{bno}
+    </update>
+
+    <select id="boardFindBno" resultType="Long">
+        select bno from bcomment where cno = #{cno}
+    </select>
+
+    <update id="boardModify">
+        update fboard set btitle = #{btitle}, bcon = #{bcon} where bno = #{bno}
+    </update>
+
+    <delete id="boardDelete">
+        delete from fboard where bno = #{bno}
+    </delete>
+
+    <!--파일첨부-->
+    <insert id="boardAddAttach">
+        insert into ATTACH(fullname, bno, regdate) values
+        (#{fullName}, bno_seq.currval, sysdate)
+    </insert>
+</mapper>
